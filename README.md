@@ -1,50 +1,90 @@
-# Welcome to your Expo app 👋
+# Elaryion Mobile - AI-Powered Skincare App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A modern skincare app built with React Native and Expo, featuring AI-powered skin analysis, personalized routines, and product recommendations.
 
-## Get started
+## Features
 
-1. Install dependencies
+- 🤖 AI-Powered Skin Analysis (UI Only)
+- 🎯 Personalized Skincare Routines
+- 📊 Progress Tracking & Insights
+- 📚 Skincare Academy & Education
+- 🏪 Product Recommendations
+- 📱 Modern & Intuitive UI
 
-   ```bash
-   npm install
-   ```
+## ⚠️ Important Note
 
-2. Start the app
+This is currently a UI prototype with mock data. There is no backend integration or real AI functionality. All data shown in the app (user profiles, product recommendations, skin analysis results, etc.) is static mock data for demonstration purposes.
 
-   ```bash
-    npx expo start
-   ```
+## Tech Stack
 
-In the output, you'll find options to open the app in a
+- React Native
+- Expo
+- TypeScript
+- Expo Router (File-based routing)
+- Linear Gradient
+- Expo Camera
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Getting Started
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
+1. Clone the repository
 ```bash
-npm run reset-project
+git clone https://github.com/yourusername/elaryion-mobile.git
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+2. Install dependencies
+```bash
+npm install
+```
 
-## Learn more
+3. Start the development server
+```bash
+npx expo start
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+## Project Structure
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```
+app/
+├── (tabs)/               # Tab-based navigation screens
+│   ├── home.tsx         # Home screen with personalized content
+│   ├── products.tsx     # Product recommendations
+│   ├── explore.tsx      # Skincare academy & education
+│   ├── profile.tsx      # User profile & settings
+│   └── face-scan.tsx    # AI skin analysis (mock)
+├── onboarding/          # Onboarding questionnaire flow
+├── data/                # Mock data files
+└── utils/               # Utility functions & components
+```
 
-## Join the community
+## Features To Be Implemented
 
-Join our community of developers creating universal apps.
+- Backend Integration
+- Real AI Skin Analysis
+- User Authentication
+- Data Persistence
+- Real Product Database
+- Payment Integration
+- Push Notifications
+- Analytics
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
+
+## License
+
+This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](LICENSE) file for details.
+
+### What this means:
+
+- ✅ You can freely use, modify, and distribute this software
+- ✅ You can use this software for commercial purposes
+- ✅ You must provide attribution to the original source
+- ✅ You must disclose your source code when you distribute this software
+- ✅ Any modifications must also be licensed under GPL-3.0
+- ✅ You must state any changes made to the code
+- ✅ You must include the original license and copyright notices
+
+For more information about GPL-3.0, visit [GNU GPL v3.0](https://www.gnu.org/licenses/gpl-3.0.en.html)
