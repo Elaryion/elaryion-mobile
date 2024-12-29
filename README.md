@@ -63,9 +63,7 @@ app/
 - User Authentication
 - Data Persistence
 - Real Product Database
-- Payment Integration
 - Push Notifications
-- Analytics
 
 ## Contributing
 
