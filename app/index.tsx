@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
 import { Link, useRouter } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function Index() {
   const router = useRouter();
@@ -21,16 +22,17 @@ export default function Index() {
 
       <View style={styles.content}>
         <Text style={styles.welcomeText}>Your skin journey start here!</Text>
-
         <Pressable style={styles.loginButton} onPress={handleLogin}>
+          <Ionicons name="logo-apple" size={24} color="#fff" />
           <Text style={styles.buttonText}>Log in with Apple</Text>
         </Pressable>
-
         <Pressable style={[styles.loginButton, styles.emailButton]} onPress={handleLogin}>
+          <Ionicons name="mail-outline" size={24} color="#000" />
           <Text style={[styles.buttonText, styles.emailButtonText]}>Log in with Email</Text>
         </Pressable>
-
+        
         <Pressable style={[styles.loginButton, styles.googleButton]} onPress={handleLogin}>
+          <Ionicons name="logo-google" size={24} color="#000" />
           <Text style={[styles.buttonText, styles.emailButtonText]}>Log in with Google</Text>
         </Pressable>
 
@@ -84,10 +86,12 @@ const styles = StyleSheet.create({
   loginButton: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: '#000',
     padding: 16,
     borderRadius: 30,
     marginBottom: 16,
+    gap: 8,
   },
   emailButton: {
     backgroundColor: '#fff',
@@ -99,16 +103,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ddd',
   },
-  buttonIcon: {
-    width: 24,
-    height: 24,
-    marginRight: 12,
-  },
   buttonText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: '500',
-    flex: 1,
     textAlign: 'center',
   },
   emailButtonText: {

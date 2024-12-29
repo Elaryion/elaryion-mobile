@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, ScrollView, Pressable, Image } from 'react-nati
 import { Link } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useRouter } from 'expo-router';
 
 type RoutineCardProps = {
   time: string;
@@ -113,6 +114,8 @@ const InsightCard = ({ title, value, change }: { title: string; value: string; c
 );
 
 export default function Home() {
+  const router = useRouter();
+
   return (
     <ScrollView style={styles.container}>
       {/* Header Section */}
@@ -121,7 +124,10 @@ export default function Home() {
           <Text style={styles.greeting}>Good morning,</Text>
           <Text style={styles.userName}>Sarah</Text>
         </View>
-        <Pressable style={styles.notificationButton}>
+        <Pressable 
+          style={styles.notificationButton}
+          onPress={() => router.push('/notifications')}
+        >
           <Ionicons name="notifications-outline" size={24} color="#1a1a2e" />
           <View style={styles.notificationBadge} />
         </Pressable>
@@ -130,15 +136,19 @@ export default function Home() {
       {/* Weather & UV Index */}
       <View style={styles.weatherSection}>
         <View style={styles.weatherCard}>
-          <Ionicons name="sunny-outline" size={24} color="#ff9500" />
+          <View style={styles.weatherIconContainer}>
+            <Ionicons name="sunny-outline" size={24} color="#ff9500" />
+          </View>
           <View style={styles.weatherInfo}>
             <Text style={styles.weatherTitle}>UV Index</Text>
             <Text style={styles.weatherValue}>High (8)</Text>
+            <Text style={styles.weatherAlert}>Apply sunscreen!</Text>
           </View>
-          <Text style={styles.weatherAlert}>Apply sunscreen!</Text>
         </View>
         <View style={styles.weatherCard}>
-          <Ionicons name="water-outline" size={24} color="#007aff" />
+          <View style={styles.weatherIconContainer}>
+            <Ionicons name="water-outline" size={24} color="#007aff" />
+          </View>
           <View style={styles.weatherInfo}>
             <Text style={styles.weatherTitle}>Humidity</Text>
             <Text style={styles.weatherValue}>65%</Text>
@@ -162,24 +172,45 @@ export default function Home() {
 
       {/* Daily Routines */}
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Today's Routines</Text>
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Today's Routines</Text>
+          <Pressable onPress={() => router.push('/routines')}>
+            <Text style={styles.seeAllButton}>See All</Text>
+          </Pressable>
+        </View>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           <RoutineCard time="Morning" title="Morning Routine" steps={4} />
           <RoutineCard time="Evening" title="Evening Routine" steps={5} />
         </ScrollView>
       </View>
 
-
+      {/* Goals Section */}
+      <View style={styles.section}>
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Your Goals</Text>
+          <Pressable onPress={() => router.push('/goals')}>
+            <Text style={styles.seeAllButton}>See All</Text>
+          </Pressable>
+        </View>
+        <GoalCard
+          title="Complete morning routine"
+          progress={75}
+          icon="sunny-outline"
+        />
+        <GoalCard
+          title="Track water intake"
+          progress={60}
+          icon="water-outline"
+        />
+      </View>
 
       {/* Product Recommendations */}
       <View style={styles.section}>
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Recommended for You</Text>
-          <Link href="/products" asChild>
-            <Pressable>
-              <Text style={styles.seeAllButton}>See All</Text>
-            </Pressable>
-          </Link>
+          <Pressable onPress={() => router.push('/products')}>
+            <Text style={styles.seeAllButton}>See All</Text>
+          </Pressable>
         </View>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           <ProductCard
@@ -365,28 +396,37 @@ const styles = StyleSheet.create({
   weatherSection: {
     flexDirection: 'row',
     padding: 20,
-    gap: 15,
+    gap: 12,
   },
   weatherCard: {
     flex: 1,
     backgroundColor: '#f8f9fa',
     borderRadius: 16,
-    padding: 15,
-    flexDirection: 'row',
+    padding: 12,
+    minHeight: 90,
+  },
+  weatherIconContainer: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: 8,
   },
   weatherInfo: {
-    marginLeft: 12,
     flex: 1,
   },
   weatherTitle: {
-    fontSize: 14,
+    fontSize: 13,
     color: '#666',
+    marginBottom: 2,
   },
   weatherValue: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: '600',
     color: '#1a1a2e',
+    marginBottom: 2,
   },
   weatherAlert: {
     fontSize: 12,

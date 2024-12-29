@@ -123,11 +123,15 @@ export default function Products() {
       {popularProducts.length > 0 && (
         <View style={[styles.section, styles.lastSection]}>
           <Text style={styles.sectionTitle}>POPULAR</Text>
-          <View style={styles.popularGrid}>
+          <ScrollView 
+            horizontal 
+            showsHorizontalScrollIndicator={false}
+            style={styles.recommendedScroll}
+          >
             {popularProducts.map((product) => (
               <ProductCard key={product.id} {...product} />
             ))}
-          </View>
+          </ScrollView>
         </View>
       )}
     </ScrollView>
@@ -272,10 +276,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#f5f5f5',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  popularGrid: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    flexWrap: 'wrap',
   },
 }); 

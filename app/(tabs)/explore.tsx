@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, ScrollView, Pressable, TextInput, Image, ImageBackground } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { router } from 'expo-router';
 
 type CourseCardProps = {
   title: string;
@@ -46,7 +47,13 @@ const CourseCard = ({ title, category, duration, image, progress, isNew }: Cours
 );
 
 const TrendingTopic = ({ title, icon, count }: { title: string; icon: any; count: number }) => (
-  <Pressable style={styles.trendingTopic}>
+  <Pressable 
+    style={styles.trendingTopic}
+    onPress={() => router.push({
+      pathname: '/topic-details',
+      params: { id: title === 'Anti-Aging' ? '1' : '2' }
+    })}
+  >
     <LinearGradient
       colors={['#f8f9fa', '#e9ecef']}
       style={styles.topicGradient}
@@ -58,27 +65,50 @@ const TrendingTopic = ({ title, icon, count }: { title: string; icon: any; count
   </Pressable>
 );
 
-const IngredientCard = ({ name, icon }: { name: string; icon: keyof typeof Ionicons.glyphMap }) => (
-  <Pressable style={styles.ingredientCard}>
-    <LinearGradient
-      colors={['#f8f9fa', '#e9ecef']}
-      style={styles.ingredientIcon}
+const IngredientCard = ({ name, icon }: { name: string; icon: keyof typeof Ionicons.glyphMap }) => {
+  const getIngredientId = (name: string) => {
+    switch(name) {
+      case 'Retinol':
+        return '3';
+      case 'Vitamin C':
+        return '2';
+      case 'Hyaluronic Acid':
+        return '1';
+      case 'Niacinamide':
+        return '4';
+      case 'AHA/BHA':
+        return '6';
+      case 'Peptides':
+        return '5';
+      default:
+        return '1';
+    }
+  };
+
+  return (
+    <Pressable 
+      style={styles.ingredientCard}
+      onPress={() => router.push({
+        pathname: '/ingredient-details',
+        params: { id: getIngredientId(name) }
+      })}
     >
-      <Ionicons name={icon} size={24} color="#1a1a2e" />
-    </LinearGradient>
-    <Text style={styles.ingredientName}>{name}</Text>
-  </Pressable>
-);
+      <LinearGradient
+        colors={['#f8f9fa', '#e9ecef']}
+        style={styles.ingredientIcon}
+      >
+        <Ionicons name={icon} size={24} color="#1a1a2e" />
+      </LinearGradient>
+      <Text style={styles.ingredientName}>{name}</Text>
+    </Pressable>
+  );
+};
 
 export default function Explore() {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>Academy</Text>
-        <Pressable style={styles.notificationButton}>
-          <Ionicons name="notifications-outline" size={24} color="#1a1a2e" />
-          <View style={styles.notificationBadge} />
-        </Pressable>
+        <Text style={styles.headerTitle}>Explore</Text>
       </View>
 
       <View style={styles.searchContainer}>
@@ -117,7 +147,12 @@ export default function Explore() {
       </View>
 
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Trending Topics</Text>
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Trending Topics</Text>
+          <Pressable onPress={() => router.push('/topics')}>
+            <Text style={styles.seeAllButton}>See All</Text>
+          </Pressable>
+        </View>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           <TrendingTopic title="Anti-Aging" icon="fitness-outline" count={8} />
           <TrendingTopic title="Acne Care" icon="medical-outline" count={6} />
@@ -129,7 +164,7 @@ export default function Explore() {
       <View style={styles.section}>
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Ingredients Library</Text>
-          <Pressable>
+          <Pressable onPress={() => router.push('/ingredients')}>
             <Text style={styles.seeAllButton}>See All</Text>
           </Pressable>
         </View>

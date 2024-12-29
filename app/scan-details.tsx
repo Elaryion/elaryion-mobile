@@ -1,114 +1,59 @@
-import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Image, Pressable, Platform } from 'react-native';
+import { useLocalSearchParams, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { useRouter, useLocalSearchParams } from 'expo-router';
-
-type SkinFactor = {
-  title: string;
-  value: string;
-  score: number;
-  description: string;
-};
-
-const factors: SkinFactor[] = [
-  {
-    title: 'Skin Type',
-    value: 'Combination',
-    score: 85,
-    description: 'Your T-zone shows slight oiliness while cheeks are normal to dry',
-  },
-  {
-    title: 'Texture',
-    value: 'Smooth',
-    score: 90,
-    description: 'Your skin texture is generally smooth with minimal roughness',
-  },
-  {
-    title: 'Pores',
-    value: 'Moderate',
-    score: 75,
-    description: 'Visible pores in T-zone area, minimal elsewhere',
-  },
-  {
-    title: 'Hydration',
-    value: 'Good',
-    score: 82,
-    description: 'Skin maintains good moisture levels with slight dehydration in some areas',
-  },
-  {
-    title: 'Sensitivity',
-    value: 'Low',
-    score: 88,
-    description: 'Your skin shows minimal sensitivity to environmental factors',
-  },
-];
-
-const FactorCard = ({ factor }: { factor: SkinFactor }) => (
-  <View style={styles.factorCard}>
-    <View style={styles.factorHeader}>
-      <Text style={styles.factorTitle}>{factor.title}</Text>
-      <View style={styles.scoreContainer}>
-        <Text style={styles.score}>{factor.score}</Text>
-        <Text style={styles.scoreLabel}>Score</Text>
-      </View>
-    </View>
-    
-    <View style={styles.factorContent}>
-      <View style={styles.valueContainer}>
-        <Text style={styles.label}>Status</Text>
-        <Text style={styles.value}>{factor.value}</Text>
-      </View>
-      
-      <Text style={styles.description}>{factor.description}</Text>
-    </View>
-  </View>
-);
 
 export default function ScanDetails() {
-  const router = useRouter();
-  const { date } = useLocalSearchParams<{ date: string }>();
-  
-  const formattedDate = new Date(date || '').toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
+  const { imageData, imagePath } = useLocalSearchParams<{ imageData: string; imagePath: string }>();
+
+  const imageSource = Platform.OS === 'web' 
+    ? { uri: `data:image/jpeg;base64,${imageData}` }
+    : { uri: `file://${imagePath}` };
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.header}>
-        <Pressable onPress={() => router.back()}>
-          <Ionicons name="chevron-back" size={24} color="#000" />
+        <Pressable onPress={() => router.back()} style={styles.backButton}>
+          <Ionicons name="arrow-back" size={24} color="#000" />
         </Pressable>
-        <Text style={styles.headerTitle}>Scan Details</Text>
-        <View style={{ width: 24 }} />
+        <Text style={styles.title}>Scan Results</Text>
       </View>
 
-      <View style={styles.content}>
-        <Text style={styles.date}>{formattedDate}</Text>
-        <View style={styles.overallScore}>
-          <Text style={styles.overallScoreValue}>85</Text>
-          <Text style={styles.overallScoreLabel}>Overall Score</Text>
+      <View style={styles.imageContainer}>
+        <Image
+          source={imageSource}
+          style={styles.image}
+          resizeMode="contain"
+        />
+      </View>
+
+      <View style={styles.resultsContainer}>
+        <Text style={styles.resultTitle}>Analysis Results</Text>
+        {/* Buraya analiz sonuçlarını ekleyebilirsiniz */}
+        <View style={styles.resultItem}>
+          <Ionicons name="water-outline" size={24} color="#1a1a2e" />
+          <View style={styles.resultTextContainer}>
+            <Text style={styles.resultLabel}>Hydration Level</Text>
+            <Text style={styles.resultValue}>Good</Text>
+          </View>
+        </View>
+        
+        <View style={styles.resultItem}>
+          <Ionicons name="sunny-outline" size={24} color="#1a1a2e" />
+          <View style={styles.resultTextContainer}>
+            <Text style={styles.resultLabel}>UV Damage</Text>
+            <Text style={styles.resultValue}>Minimal</Text>
+          </View>
         </View>
 
-        <Text style={styles.sectionTitle}>Detailed Analysis</Text>
-        
-        {factors.map((factor, index) => (
-          <FactorCard key={index} factor={factor} />
-        ))}
-
-        <View style={styles.recommendationSection}>
-          <Text style={styles.sectionTitle}>Recommendations</Text>
-          <Text style={styles.recommendationText}>
-            Based on your scan results, we recommend focusing on:
-          </Text>
-          <View style={styles.recommendationList}>
-            <Text style={styles.recommendationItem}>• Pore minimizing treatments</Text>
-            <Text style={styles.recommendationItem}>• Regular hydration</Text>
-            <Text style={styles.recommendationItem}>• Gentle exfoliation</Text>
+        <View style={styles.resultItem}>
+          <Ionicons name="fitness-outline" size={24} color="#1a1a2e" />
+          <View style={styles.resultTextContainer}>
+            <Text style={styles.resultLabel}>Skin Elasticity</Text>
+            <Text style={styles.resultValue}>Normal</Text>
           </View>
         </View>
       </View>
-    </ScrollView>
+    </View>
   );
 }
 
@@ -119,116 +64,57 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 20,
-    paddingTop: 40,
+    paddingTop: 60,
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+    backgroundColor: '#fff',
   },
-  headerTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
+  backButton: {
+    padding: 8,
+    marginRight: 16,
   },
-  content: {
-    padding: 20,
-  },
-  date: {
-    fontSize: 16,
-    color: '#666',
-    marginBottom: 20,
-  },
-  overallScore: {
-    alignItems: 'center',
-    marginBottom: 30,
-    backgroundColor: '#f8f8f8',
-    padding: 20,
-    borderRadius: 12,
-  },
-  overallScoreValue: {
-    fontSize: 48,
-    fontWeight: 'bold',
-    color: '#1a1a2e',
-  },
-  overallScoreLabel: {
-    fontSize: 16,
-    color: '#666',
-    marginTop: 8,
-  },
-  sectionTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 16,
-    marginTop: 24,
-  },
-  factorCard: {
-    backgroundColor: '#f8f8f8',
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 12,
-  },
-  factorHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 12,
-  },
-  factorTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-  },
-  scoreContainer: {
-    alignItems: 'center',
-  },
-  score: {
+  title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#1a1a2e',
   },
-  scoreLabel: {
-    fontSize: 12,
-    color: '#666',
+  imageContainer: {
+    width: '100%',
+    height: 300,
+    backgroundColor: '#f5f5f5',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  factorContent: {
-    borderTopWidth: 1,
-    borderTopColor: '#eee',
-    paddingTop: 12,
+  image: {
+    width: '100%',
+    height: '100%',
   },
-  valueContainer: {
+  resultsContainer: {
+    padding: 20,
+  },
+  resultTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  resultItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 8,
-  },
-  label: {
-    fontSize: 14,
-    color: '#666',
-    marginRight: 8,
-  },
-  value: {
-    fontSize: 16,
-    fontWeight: '500',
-  },
-  description: {
-    fontSize: 14,
-    color: '#666',
-    lineHeight: 20,
-  },
-  recommendationSection: {
-    marginTop: 24,
-    marginBottom: 40,
-  },
-  recommendationText: {
-    fontSize: 16,
-    color: '#666',
-    marginBottom: 16,
-  },
-  recommendationList: {
-    backgroundColor: '#f8f8f8',
+    backgroundColor: '#f5f5f5',
     padding: 16,
     borderRadius: 12,
+    marginBottom: 12,
   },
-  recommendationItem: {
+  resultTextContainer: {
+    marginLeft: 12,
+  },
+  resultLabel: {
     fontSize: 16,
+    color: '#666',
+  },
+  resultValue: {
+    fontSize: 18,
+    fontWeight: '600',
     color: '#1a1a2e',
-    marginBottom: 8,
-    lineHeight: 24,
   },
 }); 
