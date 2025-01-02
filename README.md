@@ -4,16 +4,30 @@ A modern skincare app built with React Native and Expo, featuring AI-powered ski
 
 ## Features
 
-- 🤖 AI-Powered Skin Analysis (UI Only)
+- 🤖 AI-Powered Skin Analysis (Connected to [Elaryion Skin Detection AI](https://github.com/Elaryion/skin-detection))
 - 🎯 Personalized Skincare Routines
 - 📊 Progress Tracking & Insights
 - 📚 Skincare Academy & Education
 - 🏪 Product Recommendations
 - 📱 Modern & Intuitive UI
 
+## 📱 Screenshots
+
+<div style="display: flex; flex-wrap: wrap; gap: 10px;">
+    <img src="./screenshots/simulator_screenshot_1.png" width="200" alt="Elaryion Mobile Screenshot 1"/>
+    <img src="./screenshots/simulator_screenshot_2.png" width="200" alt="Elaryion Mobile Screenshot 2"/>
+    <img src="./screenshots/simulator_screenshot_3.png" width="200" alt="Elaryion Mobile Screenshot 3"/>
+    <img src="./screenshots/simulator_screenshot_4.png" width="200" alt="Elaryion Mobile Screenshot 4"/>
+    <img src="./screenshots/simulator_screenshot_5.png" width="200" alt="Elaryion Mobile Screenshot 5"/>
+    <img src="./screenshots/simulator_screenshot_6.png" width="200" alt="Elaryion Mobile Screenshot 6"/>  
+    <img src="./screenshots/simulator_screenshot_7.png" width="200" alt="Elaryion Mobile Screenshot 7"/>
+    <img src="./screenshots/simulator_screenshot_8.png" width="200" alt="Elaryion Mobile Screenshot 8"/>
+    <img src="./screenshots/simulator_screenshot_9.png" width="200" alt="Elaryion Mobile Screenshot 9"/>
+</div>
+
 ## ⚠️ Important Note
 
-This is currently a UI prototype with mock data. There is no backend integration or real AI functionality. All data shown in the app (user profiles, product recommendations, skin analysis results, etc.) is static mock data for demonstration purposes.
+This is currently a UI prototype integrated with our [AI Skin Detection System](https://github.com/Elaryion/skin-detection). The skin analysis functionality is powered by our custom AI model, while other features like product recommendations and user profiles still use mock data for demonstration purposes.
 
 ## Tech Stack
 
